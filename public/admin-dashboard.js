@@ -7,6 +7,7 @@ const dom = {
   loginError: document.querySelector('[data-login-error]'),
   bookingFilter: document.querySelector('[data-booking-filter]'),
   bookingStatusFilter: document.querySelector('[data-booking-status-filter]'),
+  bookingDateFilter: document.querySelector('[data-booking-date-filter]'),
   bookingRows: document.querySelector('[data-booking-rows]'),
   specialistSelect: document.querySelector('[data-specialist-select]'),
   slotInterval: document.querySelector('[data-slot-interval]'),
@@ -453,11 +454,13 @@ async function loadDashboardData() {
 async function loadBookings() {
   const query = new URLSearchParams();
   const specialistName = dom.bookingFilter.value || 'all';
+  const selectedDate = dom.bookingDateFilter?.value || getTodayISO();
 
   if (specialistName !== 'all') {
     const specialist = specialists.find((item) => item.name === specialistName);
     if (specialist) query.set('specialistId', String(specialist.id));
   }
+  query.set('date', selectedDate);
 
   const queryString = query.toString();
   const bookingData = await request(`/api/admin/bookings${queryString ? `?${queryString}` : ''}`);
@@ -584,6 +587,7 @@ function setupEvents() {
 
   dom.bookingFilter?.addEventListener('change', loadBookings);
   dom.bookingStatusFilter?.addEventListener('change', () => renderBookingRows(dom.bookingFilter.value));
+  dom.bookingDateFilter?.addEventListener('change', loadBookings);
   dom.specialistSelect?.addEventListener('change', loadAvailabilityForSelectedSpecialist);
   dom.slotInterval?.addEventListener('change', () => {
     renderAvailabilityEditor();
@@ -647,6 +651,9 @@ async function initDashboard() {
   }
 
   try {
+    if (dom.bookingDateFilter && !dom.bookingDateFilter.value) {
+      dom.bookingDateFilter.value = getTodayISO();
+    }
     await loadDashboardData();
     dom.loginPanel.hidden = true;
     dom.dashboardPanel.hidden = false;
