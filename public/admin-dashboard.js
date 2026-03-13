@@ -34,10 +34,13 @@ const weekdays = [
   { value: 6, label: 'Sabato' }
 ];
 
+const ADMIN_AUTO_REFRESH_MS = 20000;
+
 let token = localStorage.getItem(storageKey);
 let specialists = [];
 let bookings = [];
 let availabilityPayload = { weekly: {}, exceptions: [] };
+let dashboardRefreshTimer = null;
 const slotState = {
   specialistId: null,
   blockedByWeekday: {},
@@ -127,6 +130,29 @@ function closeSlotModal() {
   slotState.selectedSlot = null;
   dom.slotModal?.classList.add('is-hidden');
   dom.slotModal?.setAttribute('hidden', 'hidden');
+}
+
+function stopDashboardAutoRefresh() {
+  if (dashboardRefreshTimer) {
+    window.clearInterval(dashboardRefreshTimer);
+    dashboardRefreshTimer = null;
+  }
+}
+
+function shouldPauseAutoRefresh() {
+  return document.hidden || !token || dom.dashboardPanel?.hidden || Boolean(slotState.modalWeekday);
+}
+
+function startDashboardAutoRefresh() {
+  stopDashboardAutoRefresh();
+  dashboardRefreshTimer = window.setInterval(async () => {
+    if (shouldPauseAutoRefresh()) return;
+    try {
+      await loadBookings();
+    } catch (error) {
+      console.warn('Auto-refresh prenotazioni non riuscito', error);
+    }
+  }, ADMIN_AUTO_REFRESH_MS);
 }
 
 function renderSlotModal() {
@@ -625,7 +651,12 @@ function setupEvents() {
 
   dom.availabilitySave?.addEventListener('click', saveAvailability);
   dom.slotToggle?.addEventListener('click', toggleSelectedSlotState);
-  dom.logout?.addEventListener('click', logoutToLogin);
+  dom.logout?.addEventListener('click', () => {
+    stopDashboardAutoRefresh();
+    clearToken();
+    token = null;
+    logoutToLogin();
+  });
   dom.closeSlotModal.forEach((button) => button.addEventListener('click', closeSlotModal));
   dom.slotModal?.addEventListener('click', (event) => {
     if (event.target === dom.slotModal) {
@@ -636,6 +667,11 @@ function setupEvents() {
     if (event.key === 'Escape' && !dom.slotModal?.hasAttribute('hidden')) {
       closeSlotModal();
     }
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden || !token || dom.dashboardPanel?.hidden) return;
+    loadBookings().catch((error) => console.warn('Refresh al ritorno in foreground non riuscito', error));
   });
 
   attachBookingStatusHandlers();
@@ -655,6 +691,7 @@ async function initDashboard() {
       dom.bookingDateFilter.value = getTodayISO();
     }
     await loadDashboardData();
+    startDashboardAutoRefresh();
     dom.loginPanel.hidden = true;
     dom.dashboardPanel.hidden = false;
     dom.loginPanel.classList.add('is-hidden');
@@ -662,6 +699,7 @@ async function initDashboard() {
     setupReveal();
   } catch (error) {
     if (error.message === 'Sessione non valida') {
+      stopDashboardAutoRefresh();
       clearToken();
       token = null;
       dom.loginPanel.hidden = false;
