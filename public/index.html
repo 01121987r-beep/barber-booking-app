@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atelier Barber Club | Prenotazione</title>
+  <meta name="description" content="Prenota online in pochi passaggi: servizio, specialista, data, orario e conferma." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell booking-app-shell">
+    <header class="booking-app-header">
+      <div class="brand-block compact">
+        <h1>Atelier Barber Club</h1>
+        <p class="build-stamp">build mobile 13/03 14:50</p>
+      </div>
+      <div class="top-actions compact">
+        <button class="btn btn-primary" type="button" data-open-manage-booking>Le tue prenotazioni</button>
+      </div>
+    </header>
+
+    <main class="booking-app-main">
+      <section class="booking-panel app-main-panel card-surface">
+          <div class="stepper" data-stepper>
+            <button class="step-chip is-active" data-step="1">Servizio</button>
+            <button class="step-chip" data-step="2">Specialista</button>
+            <button class="step-chip" data-step="3">Data</button>
+            <button class="step-chip" data-step="4">Orario</button>
+            <button class="step-chip" data-step="5">Dati</button>
+            <button class="step-chip" data-step="6">Conferma</button>
+          </div>
+
+          <div class="booking-step" data-step-panel="1">
+            <div class="section-head compact-head">
+              <span class="section-kicker">Step 1</span>
+              <h2>Scegli il servizio</h2>
+              <p>Pillole veloci con prezzo e durata. Parti da qui.</p>
+            </div>
+            <div class="service-pills" data-booking-services></div>
+          </div>
+
+          <div class="booking-step is-hidden" data-step-panel="2">
+            <div class="section-head compact-head">
+              <span class="section-kicker">Step 2</span>
+              <h2>Scegli lo specialista</h2>
+              <p>Ogni card mostra ruolo, focus tecnico e disponibilità.</p>
+            </div>
+            <div class="specialists-grid booking-specialists-grid" data-booking-specialists></div>
+          </div>
+
+          <div class="booking-step is-hidden" data-step-panel="3">
+            <div class="section-head compact-head">
+              <span class="section-kicker">Step 3</span>
+              <h2>Scegli il giorno</h2>
+              <p>Mostriamo i prossimi giorni prenotabili per il professionista selezionato.</p>
+            </div>
+            <div class="date-grid" data-date-grid></div>
+          </div>
+
+          <div class="booking-step is-hidden" data-step-panel="4">
+            <div class="section-head compact-head">
+              <span class="section-kicker">Step 4</span>
+              <h2>Scegli l’orario</h2>
+              <p>Gli slot già occupati restano esclusi automaticamente.</p>
+            </div>
+            <div class="slots-grid" data-slots-grid></div>
+            <p class="helper-text" data-slots-helper></p>
+          </div>
+
+          <div class="booking-step is-hidden" data-step-panel="5">
+            <div class="section-head compact-head">
+              <span class="section-kicker">Step 5</span>
+              <h2>I tuoi dati</h2>
+              <p>Inserisci i dati minimi per completare la prenotazione.</p>
+            </div>
+            <form class="client-form" data-booking-form>
+              <label>
+                <span>Nome e cognome</span>
+                <input type="text" name="customerName" required />
+              </label>
+              <label>
+                <span>Telefono</span>
+                <input type="tel" name="customerPhone" required />
+              </label>
+              <button class="btn btn-primary" type="submit">Vai al riepilogo</button>
+            </form>
+          </div>
+
+          <div class="booking-step is-hidden" data-step-panel="6">
+            <div class="section-head compact-head">
+              <span class="section-kicker">Step 6</span>
+              <h2>Conferma la prenotazione</h2>
+              <p>Controlla il riepilogo e salva l’appuntamento in agenda.</p>
+            </div>
+            <div class="summary-card" data-booking-summary></div>
+            <button class="btn btn-primary" type="button" data-confirm-booking>Conferma prenotazione</button>
+            <p class="form-status" data-booking-status></p>
+          </div>
+
+          <div class="booking-step is-hidden" data-step-panel="7">
+            <div class="success-panel">
+              <span class="section-kicker">Prenotazione registrata</span>
+              <h2>Grazie, appuntamento confermato.</h2>
+              <p data-success-copy>Il tuo slot è stato salvato correttamente.</p>
+              <div class="summary-card" data-success-summary></div>
+              <div class="success-actions">
+                <button class="btn btn-primary" type="button" data-manage-after-booking>Gestisci prenotazione</button>
+                <button class="btn btn-secondary" type="button" data-new-booking>Nuova prenotazione</button>
+              </div>
+            </div>
+          </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="manage-modal is-hidden" data-manage-modal>
+    <div class="manage-modal-backdrop" data-close-manage-modal></div>
+    <div class="manage-modal-dialog card-surface">
+      <div class="manage-modal-head">
+        <div>
+          <span class="section-kicker">Area clienti</span>
+          <h2>Le tue prenotazioni</h2>
+          <p>L’app salva in locale le tue prenotazioni e ti permette di modificarle o annullarle in pochi tocchi.</p>
+        </div>
+        <button class="icon-btn" type="button" data-close-manage-modal>Chiudi</button>
+      </div>
+      <p class="form-status" data-manage-status></p>
+      <div class="manage-bookings-list" data-manage-bookings></div>
+      <div class="manage-success-panel is-hidden" data-manage-success>
+        <span class="section-kicker">Operazione completata</span>
+        <h3>Grazie.</h3>
+        <p data-manage-success-copy>La prenotazione è stata aggiornata correttamente.</p>
+        <button class="btn btn-primary" type="button" data-manage-success-close>Torna alle prenotazioni</button>
+      </div>
+      <div class="manage-modal-footer">
+        <button class="btn btn-secondary" type="button" data-close-manage-modal>Chiudi area gestione</button>
+      </div>
+    </div>
+  </div>
+  <script src="./runtime-config.js"></script>
+  <script src="./app.js" type="module"></script>
+</body>
+</html>

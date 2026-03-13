@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: barber-booking-app
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: DB_PATH
+        value: /var/data/barber-shop.sqlite
+    disk:
+      name: barber-booking-data
+      mountPath: /var/data
+      sizeGB: 1

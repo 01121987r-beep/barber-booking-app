@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atelier Barber Club | Dashboard admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="admin-page">
+  <div class="admin-shell">
+    <section class="admin-login card-surface" data-login-panel>
+      <span class="section-kicker">Owner login</span>
+      <h1>Dashboard barber shop</h1>
+      <p>Accedi per gestire disponibilità, agenda e prenotazioni.</p>
+      <form class="admin-form" data-admin-login>
+        <label><span>Username</span><input type="text" name="username" value="admin" required /></label>
+        <label><span>Password</span><input type="password" name="password" value="barber123" required /></label>
+        <button class="btn btn-primary" type="submit">Accedi</button>
+        <p class="form-status" data-login-error></p>
+      </form>
+    </section>
+
+    <main class="admin-dashboard is-hidden" data-dashboard-panel hidden>
+      <header class="admin-header">
+        <div>
+          <span class="section-kicker">Admin control room</span>
+          <h1>Agenda e disponibilità</h1>
+          <p>Da qui controlli disponibilità e prenotazioni. Servizi e specialisti sono in sezioni dedicate.</p>
+        </div>
+        <div class="admin-header-actions">
+          <a href="/admin/services" class="btn btn-secondary">Gestisci servizi</a>
+          <a href="/admin/specialists" class="btn btn-secondary">Gestisci specialisti</a>
+          <button class="btn btn-primary" type="button" data-logout>Esci</button>
+        </div>
+      </header>
+
+      <section class="admin-grid admin-grid-large admin-grid-bookings">
+        <article class="card-surface reveal admin-bookings-panel">
+          <div class="admin-section-head">
+            <div>
+              <span class="section-kicker">Prenotazioni</span>
+              <h2>Agenda appuntamenti</h2>
+            </div>
+          </div>
+          <div class="booking-filters">
+            <label class="booking-filter-field">
+              <span>Specialisti</span>
+              <select data-booking-filter>
+                <option value="all">Tutti</option>
+              </select>
+            </label>
+            <label class="booking-filter-field">
+              <span>Stato</span>
+              <select data-booking-status-filter>
+                <option value="all">Tutte</option>
+                <option value="confirmed">Confermate</option>
+                <option value="cancelled">Annullate</option>
+              </select>
+            </label>
+          </div>
+          <div class="table-wrap"><table class="admin-table"><thead><tr><th>Cliente</th><th>Telefono</th><th>Servizio</th><th>Specialista</th><th>Data</th><th>Orario</th><th>Stato</th><th></th></tr></thead><tbody data-booking-rows></tbody></table></div>
+        </article>
+      </section>
+
+      <section class="admin-grid admin-grid-large admin-grid-availability">
+        <article class="card-surface reveal">
+          <div class="admin-section-head">
+            <div>
+              <span class="section-kicker">Disponibilità</span>
+              <h2>Fasce, eccezioni e intervallo slot</h2>
+            </div>
+          </div>
+          <form class="admin-form" data-availability-form data-exception-form>
+            <label>
+              <span>Specialista</span>
+              <select name="specialistId" data-specialist-select required></select>
+            </label>
+            <label>
+              <span>Intervallo slot</span>
+              <select name="slotIntervalMinutes" data-slot-interval>
+                <option value="30">30 minuti</option>
+                <option value="45">45 minuti</option>
+              </select>
+            </label>
+            <div class="availability-editor" data-availability-editor></div>
+            <div class="exception-block">
+              <h3>Eccezione rapida / blocco slot</h3>
+              <div class="inline-fields">
+                <label><span>Dal giorno</span><input type="date" name="exceptionStartDate" /></label>
+                <label><span>Al giorno</span><input type="date" name="exceptionEndDate" /></label>
+                <label><span>Inizio</span><input type="time" name="exceptionStart" /></label>
+                <label><span>Fine</span><input type="time" name="exceptionEnd" /></label>
+              </div>
+              <button class="btn btn-secondary" type="submit">Aggiungi esclusione</button>
+              <ul class="exception-list" data-exception-list></ul>
+            </div>
+            <button class="btn btn-primary" type="button" data-save-availability>Salva disponibilità</button>
+            <p class="form-status" data-availability-status></p>
+          </form>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div class="slot-modal is-hidden" data-slot-modal>
+    <div class="slot-modal-backdrop" data-close-slot-modal></div>
+    <div class="slot-modal-dialog card-surface">
+      <div class="slot-modal-head">
+        <div>
+          <span class="section-kicker">Gestione slot orari</span>
+          <h2 data-slot-modal-title>Slot del giorno</h2>
+        </div>
+        <button class="icon-btn" type="button" data-close-slot-modal>Chiudi</button>
+      </div>
+      <p class="helper-text" data-slot-modal-copy>Seleziona uno slot per eliminarlo o ripristinarlo.</p>
+      <div class="slot-modal-pills" data-slot-modal-pills></div>
+      <div class="slot-modal-actions">
+        <button class="btn btn-secondary" type="button" data-slot-toggle disabled>Elimina</button>
+      </div>
+    </div>
+  </div>
+  <script src="/admin-dashboard.js" type="module"></script>
+</body>
+</html>

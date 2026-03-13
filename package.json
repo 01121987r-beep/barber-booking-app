@@ -1,0 +1,17 @@
+{
+  "name": "barber-booking-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.2.0",
+    "@capacitor/cli": "^8.2.0",
+    "@capacitor/core": "^8.2.0",
+    "better-sqlite3": "^11.8.1",
+    "express": "^4.21.2"
+  }
+}

@@ -1,0 +1,10 @@
+node_modules
+android/.gradle
+android/.idea
+android/local.properties
+android/build
+android/app/build
+barber-shop.sqlite
+barber-shop.sqlite-shm
+barber-shop.sqlite-wal
+.DS_Store

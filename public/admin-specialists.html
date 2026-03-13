@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atelier Barber Club | Gestione specialisti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="admin-page">
+  <div class="admin-shell">
+    <main class="admin-dashboard" data-admin-specialists-page>
+      <header class="admin-header">
+        <div>
+          <span class="section-kicker">Admin specialists</span>
+          <h1>Gestione specialisti</h1>
+          <p>CRUD specialisti in una pagina dedicata.</p>
+        </div>
+        <div class="admin-header-actions">
+          <a href="/admin" class="btn btn-secondary">Dashboard</a>
+          <button class="btn btn-primary" type="button" data-logout>Esci</button>
+        </div>
+      </header>
+      <section class="card-surface reveal">
+        <form class="admin-form" data-specialist-form>
+          <input type="hidden" name="id" />
+          <label><span>Nome</span><input type="text" name="name" required /></label>
+          <div class="inline-fields">
+            <label><span>Ruolo</span><input type="text" name="role" required /></label>
+            <label><span>Specializzazione</span><input type="text" name="specialization" required /></label>
+          </div>
+          <label><span>Avatar URL</span><input type="url" name="avatar" required /></label>
+          <label><span>Bio</span><textarea name="bio" rows="3" required></textarea></label>
+          <label class="inline-checkbox"><input type="checkbox" name="active" checked /><span>Specialista attivo</span></label>
+          <div class="inline-actions">
+            <button class="btn btn-primary" type="submit">Salva specialista</button>
+            <button class="btn btn-secondary" type="button" data-reset-specialist>Reset</button>
+          </div>
+        </form>
+        <div class="table-wrap"><table class="admin-table"><thead><tr><th>Nome</th><th>Ruolo</th><th>Intervallo</th><th>Stato</th><th></th></tr></thead><tbody data-specialists-table></tbody></table></div>
+      </section>
+    </main>
+  </div>
+  <script src="/admin-specialists.js" type="module"></script>
+</body>
+</html>

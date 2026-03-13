@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atelier Barber Club | Gestione servizi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="admin-page">
+  <div class="admin-shell">
+    <main class="admin-dashboard" data-admin-services-page>
+      <header class="admin-header">
+        <div>
+          <span class="section-kicker">Admin services</span>
+          <h1>Gestione servizi</h1>
+          <p>CRUD servizi in una pagina dedicata.</p>
+        </div>
+        <div class="admin-header-actions">
+          <a href="/admin" class="btn btn-secondary">Dashboard</a>
+          <button class="btn btn-primary" type="button" data-logout>Esci</button>
+        </div>
+      </header>
+      <section class="card-surface reveal">
+        <form class="admin-form" data-service-form>
+          <input type="hidden" name="id" />
+          <label><span>Nome servizio</span><input type="text" name="name" required /></label>
+          <div class="inline-fields">
+            <label><span>Prezzo</span><input type="number" name="price" min="1" step="0.01" required /></label>
+            <label><span>Durata (min)</span><input type="number" name="duration_minutes" min="15" step="15" required /></label>
+          </div>
+          <label><span>Descrizione</span><textarea name="description" rows="3" required></textarea></label>
+          <label class="inline-checkbox"><input type="checkbox" name="featured" checked /><span>Servizio in evidenza</span></label>
+          <div class="inline-actions">
+            <button class="btn btn-primary" type="submit">Salva servizio</button>
+            <button class="btn btn-secondary" type="button" data-reset-service>Reset</button>
+          </div>
+        </form>
+        <div class="table-wrap"><table class="admin-table"><thead><tr><th>Servizio</th><th>Prezzo</th><th>Durata</th><th></th></tr></thead><tbody data-services-table></tbody></table></div>
+      </section>
+    </main>
+  </div>
+  <script src="/admin-services.js" type="module"></script>
+</body>
+</html>

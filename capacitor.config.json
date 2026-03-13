@@ -1,0 +1,6 @@
+{
+  "appId": "it.futuraweb.atelierbarberclub",
+  "appName": "Atelier Barber Club",
+  "webDir": "public",
+  "bundledWebRuntime": false
+}
